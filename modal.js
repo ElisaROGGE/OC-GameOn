@@ -28,16 +28,94 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
-function validate(){
-  const regFirstName = /^[a-zA-Z]+$/;
+
+function checkFirstname() {
+  const regFirstName = /^[a-zA-Z]{2,}$/;
   const firstname = document.getElementById('first').value;
-  if(!regFirstName.test(firstname)){
-      alert('Please enter a valid name');
-      document.getElementById('first').focus();
-      return false;
-  }else{
-      return true;
+  const error = document.getElementById('errorFirstname');
+
+  if (!regFirstName.test(firstname)) {
+    error.style.display = 'block';
+    error.textContent = 'Veuillez inscrire un prénom correct';
+    document.getElementById('first').focus();
+    return false;
+  } else {
+    error.style.display = 'none'
+    return true;
   }
+}
+
+function checkLastName() {
+  const regLastName = /^[a-zA-Z]{2,}(?:['\s-][a-zA-Z]+)*$/;
+  const lastName = document.getElementById('last').value;
+  const error = document.getElementById('errorLast');
+
+  if (!regLastName.test(lastName)) {
+    error.style.display = 'block';
+    error.textContent = 'Veuillez inscrire un nom de famille correct';
+    document.getElementById('last').focus();
+    return false;
+  } else {
+    error.style.display = 'none'
+    return true;
+  }
+}
+
+function checkEmail() {
+  const regEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const email = document.getElementById('email').value;
+  const error = document.getElementById('errorEmail');
+
+  if (!regEmail.test(email)) {
+    error.style.display = 'block'
+    error.textContent = 'Veuillez inscrire une adresse e-mail valide';
+    document.getElementById('email').focus();
+    return false;
+  } else {
+    error.style.display = 'none'
+    return true;
+  }
+}
+
+function checkDate() {
+  const date = document.getElementById('birthdate').value;
+  const error = document.getElementById('errorDate');
+
+  const inputDate = new Date(date);
+
+  const inputYear = inputDate.getFullYear();
+
+  if (inputYear > 2010) {
+    error.style.display = 'block'
+    error.textContent = 'Vous devez avoir plus de 13 ans';
+    document.getElementById('date').focus();
+    return false;
+  } else {
+    error.style.display = 'none'
+    return true;
+  }
+}
+
+
+// formModal
+const formModal = document.getElementById('formModal')
+formModal.addEventListener('submit', (e) => validate(e))
+// formModal.addEventListener('submit', (e) => {
+//   //Ton code
+// })
+
+function validate(e){
+ e.preventDefault()
+
+  if(checkFirstname() && checkLastName() && checkEmail() && checkDate()){
+        //Afficher les champs dans la console.log
+        console.log("Tout est ok")
+        return true;
+    }else{
+      console.log("Erreur")
+        return false;
+    }
+
 }
 
 
