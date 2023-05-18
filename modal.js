@@ -9,15 +9,19 @@ function editNav() {
 
 // DOM Elements
 const modalbg = document.querySelector(".bground");
+const modalSuccess = document.querySelector(".success");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const close = document.querySelectorAll(".close");
+const closeSuccess = document.querySelector(".success-close");
 
+modalSuccess.style.display = "none";
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // close modal event
 close.forEach((btn) => btn.addEventListener("click", closeModal));
+closeSuccess.addEventListener("click", closeModal);
 
 // launch modal form
 function launchModal() {
@@ -28,18 +32,21 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
-
 function checkFirstname() {
   const regFirstName = /^[a-zA-Z]{2,}(?:['\s-][a-zA-Z]+)*$/;
   const firstname = document.getElementById('first');
   const error = document.getElementById('errorFirstname');
-
+  const errorInput = document.querySelector(".text-control"); 
+  
   if (!regFirstName.test(firstname.value)) {
     error.style.display = 'block';
     error.textContent = 'Veuillez inscrire un prénom correct';
+    errorInput.style.border = '2px solid red';
+
     firstname.focus();
     return false;
   } else {
+    errorInput.style.border = ""
     error.style.display = 'none'
     return true;
   }
@@ -49,13 +56,16 @@ function checkLastName() {
   const regLastName = /^[a-zA-Z]{2,}(?:['\s-][a-zA-Z]+)*$/;
   const lastName = document.getElementById('last');
   const error = document.getElementById('errorLast');
-
+  const errorInput = document.querySelector(".text-control"); 
+  
   if (!regLastName.test(lastName.value)) {
     error.style.display = 'block';
     error.textContent = 'Veuillez inscrire un nom de famille correct';
+    errorInput.style.border = '2px solid red';
     lastName.focus();
     return false;
   } else {
+    errorInput.style.border = "none"
     error.style.display = 'none'
     return true;
   }
@@ -65,13 +75,16 @@ function checkEmail() {
   const regEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   const email = document.getElementById('email');
   const error = document.getElementById('errorEmail');
-
+  const errorInput = document.querySelector(".text-control"); 
+  
   if (!regEmail.test(email.value)) {
     error.style.display = 'block'
     error.textContent = 'Veuillez inscrire une adresse e-mail valide';
+    errorInput.style.border = '2px solid red';
     email.focus();
     return false;
   } else {
+    errorInput.style.border = "none"
     error.style.display = 'none'
     return true;
   }
@@ -80,19 +93,21 @@ function checkEmail() {
 function checkDate() {
   const date = document.getElementById('birthdate');
   const error = document.getElementById('errorDate');
-
+  const errorInput = document.querySelector(".text-control"); 
+  
   const inputDate = new Date(date.value);
   const yearMax = new Date().getFullYear() - 13 ;
-  console.log(yearMax)
-
+  
   const inputYear = inputDate.getFullYear();
-
+  
   if (inputYear > yearMax) {
     error.style.display = 'block'
     error.textContent = 'Vous devez avoir plus de 13 ans';
+    errorInput.style.border = '2px solid red';
     date.focus();
     return false;
   } else {
+    errorInput.style.border = "none"
     error.style.display = 'none'
     return true;
   }
@@ -103,13 +118,16 @@ function checkNumber() {
 
   const input = document.getElementById('quantity');
   const error = document.getElementById('errorNumber');
+  const errorInput = document.querySelector(".text-control"); 
   
   if (!regNumbers.test(input.value)) {
     error.style.display = 'block'
     error.textContent = 'Veuillez inscrire uniquement des chiffres';
+    errorInput.style.border = '2px solid red';
     input.focus();
     return false;
   } else {
+    errorInput.style.border = "none"
     error.style.display = 'none'
     return true;
   }
@@ -155,9 +173,6 @@ function checkCheckbox(){
 // formModal
 const formModal = document.getElementById('formModal')
 formModal.addEventListener('submit', (e) => validate(e))
-// formModal.addEventListener('submit', (e) => {
-//   //Ton code
-// })
 
 function validate(e){
   e.preventDefault()
@@ -178,10 +193,12 @@ function validate(e){
       quantity
     }
 
-    // Les afficher dans un console.log(contact)
     console.log(contact)
-      console.log("Tout est ok")
-      return true;
+    console.log("Tout est ok")
+    formModal.style.display = "none";
+    modalSuccess.style.display = "flex";
+    formModal.reset()
+    return true;
     }else{
       console.log("Erreur")
       return false;
