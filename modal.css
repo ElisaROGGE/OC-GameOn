@@ -14,7 +14,6 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  background-image: url("background.png");
   font-family: var(--font-default);
   font-size: 18px;
   max-width: 1300px;
@@ -39,6 +38,7 @@ img {
 }
 .main-navbar {
     float: right;
+    margin-right: 40px;
 }
 .topnav a {
   float: left;
@@ -73,6 +73,17 @@ img {
   .topnav a.icon {
     float: right;
     display: block;
+    color: #f00;
+  }
+  .topnav a:hover.icon {
+    color: #ffffff;
+  }
+  .bground{
+    background-color: transparent !important;
+  }
+  .content{
+    margin-top: 80px !important;
+    max-width: 100% !important;
   }
 }
 
@@ -97,7 +108,6 @@ img {
   .topnav a.icon {
     float: right;
     display: block;
-    margin-top: -15px;
   }
 } 
 
@@ -237,12 +247,6 @@ input {
 .formData[data-error-visible="true"] .text-control {
   border: 2px solid #e54858;
 }
-/* 
-input[data-error]::after {
-    content: attr(data-error);
-    font-size: 0.4em;
-    color: red;
-} */
 .checkbox-label,
 .checkbox2-label {
   position: relative;
@@ -478,6 +482,7 @@ input[data-error]::after {
   height: 100%;
   display: block;
   padding: 0;
+  object-fit: cover;
 }
 .copyrights {
   color: #fe142f;
@@ -511,7 +516,7 @@ footer {
     display: none;
   }
   .hero-headline {
-    font-size: 4.5rem;
+    font-size: 3rem;
     white-space: normal;
   }
   .hero-text {

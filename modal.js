@@ -30,13 +30,18 @@ function launchModal() {
 // close modal form
 function closeModal() {
   modalbg.style.display = "none";
+  if(modalSuccess.style.display === "flex"){
+    formModal.style.display = "block";
+    modalSuccess.style.display = "none";
+  }
 }
 
+// Vérification du prénom
 function checkFirstname() {
   const regFirstName = /^[a-zA-Z]{2,}(?:['\s-][a-zA-Z]+)*$/;
   const firstname = document.getElementById('first');
   const error = document.getElementById('errorFirstname');
-  const errorInput = document.querySelector(".text-control"); 
+  const errorInput = error.previousElementSibling; 
   
   if (!regFirstName.test(firstname.value)) {
     error.style.display = 'block';
@@ -46,17 +51,18 @@ function checkFirstname() {
     firstname.focus();
     return false;
   } else {
-    errorInput.style.border = ""
+    errorInput.style.border = "0.8px solid #ccc"
     error.style.display = 'none'
     return true;
   }
 }
 
+// Vérification du nom de famille
 function checkLastName() {
   const regLastName = /^[a-zA-Z]{2,}(?:['\s-][a-zA-Z]+)*$/;
   const lastName = document.getElementById('last');
   const error = document.getElementById('errorLast');
-  const errorInput = document.querySelector(".text-control"); 
+  const errorInput = error.previousElementSibling; 
   
   if (!regLastName.test(lastName.value)) {
     error.style.display = 'block';
@@ -65,17 +71,18 @@ function checkLastName() {
     lastName.focus();
     return false;
   } else {
-    errorInput.style.border = "none"
+    errorInput.style.border = "0.8px solid #ccc"
     error.style.display = 'none'
     return true;
   }
 }
 
+//Vérification de l'email
 function checkEmail() {
   const regEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   const email = document.getElementById('email');
   const error = document.getElementById('errorEmail');
-  const errorInput = document.querySelector(".text-control"); 
+  const errorInput = error.previousElementSibling;
   
   if (!regEmail.test(email.value)) {
     error.style.display = 'block'
@@ -90,10 +97,11 @@ function checkEmail() {
   }
 }
 
+// Vérification de la date de naissance
 function checkDate() {
   const date = document.getElementById('birthdate');
   const error = document.getElementById('errorDate');
-  const errorInput = document.querySelector(".text-control"); 
+  const errorInput = error.previousElementSibling;
   
   const inputDate = new Date(date.value);
   const yearMax = new Date().getFullYear() - 13 ;
@@ -106,19 +114,27 @@ function checkDate() {
     errorInput.style.border = '2px solid red';
     date.focus();
     return false;
-  } else {
+  }
+  else if(date.value === ""){
+    error.style.display = "block"
+    error.textContent = "Vous devez inscrire une date de naissance";
+    errorInput.style.border = '2px solid red';
+    return false
+  }
+   else {
     errorInput.style.border = "none"
     error.style.display = 'none'
     return true;
   }
 }
 
+// Vérification si le champ est bien un nombre
 function checkNumber() {
   const regNumbers = /^\d+$/;
 
   const input = document.getElementById('quantity');
   const error = document.getElementById('errorNumber');
-  const errorInput = document.querySelector(".text-control"); 
+  const errorInput = error.previousElementSibling;
   
   if (!regNumbers.test(input.value)) {
     error.style.display = 'block'
@@ -133,6 +149,7 @@ function checkNumber() {
   }
 }
 
+// Vérification si un bouton radio a été sélectionné
 function checkRadio() {
   const radioButtons = document.getElementsByName('location');
   const error = document.getElementById('errorRadio');
@@ -156,6 +173,7 @@ function checkRadio() {
   }
 }
 
+// Vérification si la checkbox des CGU a été cochée
 function checkCheckbox(){
   const checkbox1 = document.getElementById('checkbox1')
   const error = document.getElementById('errorCheckbox')
@@ -170,7 +188,6 @@ function checkCheckbox(){
   }
 }
 
-// formModal
 const formModal = document.getElementById('formModal')
 formModal.addEventListener('submit', (e) => validate(e))
 
@@ -178,7 +195,6 @@ function validate(e){
   e.preventDefault()
 
   if(checkFirstname() && checkLastName() && checkEmail() && checkDate() && checkNumber() && checkRadio() && checkCheckbox()){
-    // Toutes tes valeurs
     const firstname = document.getElementById('first').value;
     const lastname = document.getElementById('last').value;
     const email = document.getElementById('email').value;
